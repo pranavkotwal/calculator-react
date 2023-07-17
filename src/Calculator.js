@@ -4,15 +4,18 @@ import styles from './styles/calculator.module.css'
 function Display({ value }) {
   return <div className={styles.display}>{value}</div>;
 }
+// Button component for rendering the calculator button
 function Button({ label, onClick, className }) {
     return <button className={className} onClick={onClick}>{label}</button>;
   }
 
 function Calculator() {
-  const [displayValue, setDisplayValue] = useState('0');
-  const [storedValue, setStoredValue] = useState(null);
-  const [operator, setOperator] = useState(null);
+    const [displayValue, setDisplayValue] = useState('0'); // State for the display value
+    const [storedValue, setStoredValue] = useState(null); // State for storing previous value
+    const [operator, setOperator] = useState(null); // State for storing the selected operator
 
+
+  // Function for handling number button clicks
   const handleNumberClick = (num) => {
     setDisplayValue(prevValue => {
       if (prevValue === '0') {
@@ -22,7 +25,8 @@ function Calculator() {
       }
     });
   };
-
+  
+    // Function for handling operator button clicks
   const handleOperatorClick = (op) => {
     if (storedValue === null) {
       setStoredValue(parseFloat(displayValue));
@@ -33,19 +37,24 @@ function Calculator() {
       setOperator(op);
     }
   };
+  // Function for handling percentage button click
+
   const handlePercentageClick = () => {
     const currentValue = parseFloat(displayValue);
     const percentageValue = currentValue / 100;
     setDisplayValue(percentageValue.toString());
   };
-  
+  // for handling deimal clicl
   const handleDecimalClick = () => {
     if (!displayValue.includes('.')) {
       setDisplayValue(prevValue => prevValue + '.');
     }
   };
 
+  // function that performs calculations 
+
   const calculate = () => {
+    // beause the values are going to be used in float
     const currentValue = parseFloat(displayValue);
     let result = 0;
 
@@ -70,11 +79,14 @@ function Calculator() {
     setStoredValue(result);
   };
 
+  // for handlicking "c" button
+
   const handleClearClick = () => {
     setDisplayValue('0');
     setStoredValue(null);
     setOperator(null);
   };
+  //for handling "=" button
 
   const handleEqualsClick = () => {
     if (storedValue !== null) {
